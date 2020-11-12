@@ -1,9 +1,9 @@
 # SDP 2021 Team 32
 
 # Members
-Linda Tran - Current Repository,                                                            
-Angela Nayiga - https://github.com/Angela-N/Smart-Stick,                                            
-Marly Dure -,                                                       
+Linda Tran - Current Repository                                                              
+Angela Nayiga - https://github.com/Angela-N/Smart-Stick                                             
+Marly Dure -                                                                 
 Max Matias -                                        
 
 # Resources for Emic 2 Text to Speech Module 
