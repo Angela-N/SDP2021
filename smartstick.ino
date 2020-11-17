@@ -1,21 +1,12 @@
 /*
-  
-  Emic 2 Text-to-Speech Module: Basic Demonstration       
-                                                         
-  Author: Joe Grand [www.grandideastudio.com]             
-  Contact: support@parallax.com                            
-  
-  Program Description:
-  
-  This program provides a simple demonstration of the Emic 2 Text-to-Speech
-  Module. Please refer to the product manual for full details of system 
-  functionality and capabilities.
+SDP 2020 Team 32
+Emic 2 Text-to-speech Module
+Linda Tran
 
-  Revisions:
-  
-  1.0 (February 13, 2012): Initial release
-  1.1 (April 29, 2014): Changed rxPin/txPin to use pins 10/11, respectively, for widest support across the Arduino family (http://arduino.cc/en/Reference/SoftwareSerial)
-    
+Version 1.0 November 2, 2020  Used Example Code
+Version 1.5 November 7, 2020  Added Dates, Introduction
+Version 2.0 November 13, 2020 Added comments, Left/right/distance statements
+Version 3.0 November 17, 2020 Changed statements into functions
 */
 
 // include the SoftwareSerial library so we can use it to talk to the Emic 2 module
@@ -63,9 +54,35 @@ void loop()  // Main code, to run repeatedly
   digitalWrite(ledPin, LOW);
     
   delay(500);    // 1/2 second delay
-    
-  // Sing a song
-  //emicSerial.print("D1\n");
+
+  // Introduction
+  emicSerial.print('S');
+  emicSerial.print("Hello, this is Linda's MDR Deliverable.");  // Send the desired string to convert to speech
+  emicSerial.print('\n');
+  digitalWrite(ledPin, HIGH);         // Turn on LED while Emic is outputting audio
+  while (emicSerial.read() != ':');   // Wait here until the Emic 2 responds with a ":" indicating it's ready to accept the next command
+  digitalWrite(ledPin, LOW);
+  
+  // Object is on the left
+  emicSerial.print('S');
+  emicSerial.print("There is an object is on the left.");  // Send the desired string to convert to speech
+  emicSerial.print('\n');
+  digitalWrite(ledPin, HIGH);         // Turn on LED while Emic is outputting audio
+  while (emicSerial.read() != ':');   // Wait here until the Emic 2 responds with a ":" indicating it's ready to accept the next command
+  digitalWrite(ledPin, LOW);
+  
+  // Object is on the right
+  emicSerial.print('S');
+  emicSerial.print("There is an object is on the right");  // Send the desired string to convert to speech
+  emicSerial.print('\n');
+  digitalWrite(ledPin, HIGH);         // Turn on LED while Emic is outputting audio
+  while (emicSerial.read() != ':');   // Wait here until the Emic 2 responds with a ":" indicating it's ready to accept the next command
+  digitalWrite(ledPin, LOW);
+
+  // Object is 2 feet away
+  emicSerial.print('S');
+  emicSerial.print("There is an object that is 2 feet away");  // Send the desired string to convert to speech
+  emicSerial.print('\n');
   digitalWrite(ledPin, HIGH);         // Turn on LED while Emic is outputting audio
   while (emicSerial.read() != ':');   // Wait here until the Emic 2 responds with a ":" indicating it's ready to accept the next command
   digitalWrite(ledPin, LOW);
@@ -78,3 +95,13 @@ void loop()  // Main code, to run repeatedly
     digitalWrite(ledPin, LOW);
   }
 }
+//
+//void date(){
+//  // Speak some text
+//  emicSerial.print('S');
+//  emicSerial.print("Hello. This is test number 1. Today is November second twenty twenty.");  // Send the desired string to convert to speech
+//  emicSerial.print('\n');
+//  digitalWrite(ledPin, HIGH);         // Turn on LED while Emic is outputting audio
+//  while (emicSerial.read() != ':');   // Wait here until the Emic 2 responds with a ":" indicating it's ready to accept the next command
+//  digitalWrite(ledPin, LOW);
+//}
