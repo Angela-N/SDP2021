@@ -6,7 +6,7 @@ Linda Tran
 Version 1.0 November 2, 2020  Used Example Code
 Version 1.5 November 7, 2020  Added Dates, Introduction
 Version 2.0 November 13, 2020 Added comments, Left/right/distance statements
-Version 3.0 November 17, 2020 Changed statements into functions
+Version 3.0 November 17, 2020 Changed statements into functions, added change voice, added change language
 */
 
 // include the SoftwareSerial library so we can use it to talk to the Emic 2 module
@@ -29,7 +29,7 @@ void setup()  // Set up code called once on start-up
   // set the data rate for the SoftwareSerial port
   emicSerial.begin(9600);
 
-  digitalWrite(ledPin, LOW);  // turn LED off
+  digitalWrite(ledPin, LOW);  // turn LED off, LED turns on when speaking
   
   /*
     When the Emic 2 powers on, it takes about 3 seconds for it to successfully
@@ -43,50 +43,23 @@ void setup()  // Set up code called once on start-up
   emicSerial.flush();                 // Flush the receive buffer
 }
 
-void loop()  // Main code, to run repeatedly
+void loop()       // Main code, to run repeatedly
 {
-  // Speak some text
-  emicSerial.print('S');
-  emicSerial.print("Hello. This is test number 1. Today is November second twenty twenty.");  // Send the desired string to convert to speech
-  emicSerial.print('\n');
-  digitalWrite(ledPin, HIGH);         // Turn on LED while Emic is outputting audio
-  while (emicSerial.read() != ':');   // Wait here until the Emic 2 responds with a ":" indicating it's ready to accept the next command
-  digitalWrite(ledPin, LOW);
+  
+  date();
+  delay(500);     // 1/2 second delay
+
+  introduction();
+  delay(500);       // 1/2 second delay
+  
+  leftOfCane();     //There is an obj on the left of the cane
+  delay(500);       // 1/2 second delay
+  
+  rightOfCane();    //There is an obj on the right of the cane
+  delay(500);       // 1/2 second delay
+  
+  distanceOfObj();  //There is an obj ___ ahead -- Currently hardwired
     
-  delay(500);    // 1/2 second delay
-
-  // Introduction
-  emicSerial.print('S');
-  emicSerial.print("Hello, this is Linda's MDR Deliverable.");  // Send the desired string to convert to speech
-  emicSerial.print('\n');
-  digitalWrite(ledPin, HIGH);         // Turn on LED while Emic is outputting audio
-  while (emicSerial.read() != ':');   // Wait here until the Emic 2 responds with a ":" indicating it's ready to accept the next command
-  digitalWrite(ledPin, LOW);
-  
-  // Object is on the left
-  emicSerial.print('S');
-  emicSerial.print("There is an object is on the left.");  // Send the desired string to convert to speech
-  emicSerial.print('\n');
-  digitalWrite(ledPin, HIGH);         // Turn on LED while Emic is outputting audio
-  while (emicSerial.read() != ':');   // Wait here until the Emic 2 responds with a ":" indicating it's ready to accept the next command
-  digitalWrite(ledPin, LOW);
-  
-  // Object is on the right
-  emicSerial.print('S');
-  emicSerial.print("There is an object is on the right");  // Send the desired string to convert to speech
-  emicSerial.print('\n');
-  digitalWrite(ledPin, HIGH);         // Turn on LED while Emic is outputting audio
-  while (emicSerial.read() != ':');   // Wait here until the Emic 2 responds with a ":" indicating it's ready to accept the next command
-  digitalWrite(ledPin, LOW);
-
-  // Object is 2 feet away
-  emicSerial.print('S');
-  emicSerial.print("There is an object that is 2 feet away");  // Send the desired string to convert to speech
-  emicSerial.print('\n');
-  digitalWrite(ledPin, HIGH);         // Turn on LED while Emic is outputting audio
-  while (emicSerial.read() != ':');   // Wait here until the Emic 2 responds with a ":" indicating it's ready to accept the next command
-  digitalWrite(ledPin, LOW);
-
   while(1)      // Demonstration complete!
   {
     delay(500);
@@ -95,13 +68,75 @@ void loop()  // Main code, to run repeatedly
     digitalWrite(ledPin, LOW);
   }
 }
-//
-//void date(){
-//  // Speak some text
-//  emicSerial.print('S');
-//  emicSerial.print("Hello. This is test number 1. Today is November second twenty twenty.");  // Send the desired string to convert to speech
-//  emicSerial.print('\n');
-//  digitalWrite(ledPin, HIGH);         // Turn on LED while Emic is outputting audio
-//  while (emicSerial.read() != ':');   // Wait here until the Emic 2 responds with a ":" indicating it's ready to accept the next command
-//  digitalWrite(ledPin, LOW);
-//}
+
+void changeVoice(){
+  //Change Voice
+  emicSerial.print('N');
+  emicSerial.print('2');              // change voice [0,8]
+  emicSerial.print('\n');
+  digitalWrite(ledPin, HIGH);         // Turn on LED while Emic is outputting audio
+  while (emicSerial.read() != ':');   // Wait here until the Emic 2 responds with a ":" indicating it's ready to accept the next command
+  digitalWrite(ledPin, LOW);
+}
+
+void changeLanguage(){
+  //Change Language
+  emicSerial.print('P');
+  emicSerial.print('0');              // change language/dialect [0,2]
+  emicSerial.print('\n');
+  digitalWrite(ledPin, HIGH);         // Turn on LED while Emic is outputting audio
+  while (emicSerial.read() != ':');   // Wait here until the Emic 2 responds with a ":" indicating it's ready to accept the next command
+  digitalWrite(ledPin, LOW);
+}
+
+void date(){
+  // Test 1: Say today's date
+  changeVoice();
+  changeLanguage();
+  emicSerial.print('S');
+  emicSerial.print("Hello. This is test number 1. Today is November seven teen twenty twenty.");  // Send the desired string to convert to speech
+  emicSerial.print('\n');
+  digitalWrite(ledPin, HIGH);         // Turn on LED while Emic is outputting audio
+  while (emicSerial.read() != ':');   // Wait here until the Emic 2 responds with a ":" indicating it's ready to accept the next command
+  digitalWrite(ledPin, LOW);
+}
+
+void introduction(){
+  // Introduction
+  emicSerial.print('S');
+  emicSerial.print("This is Linda's MDR Deliverable.");  // Send the desired string to convert to speech
+  emicSerial.print('\n');
+  digitalWrite(ledPin, HIGH);         // Turn on LED while Emic is outputting audio
+  while (emicSerial.read() != ':');   // Wait here until the Emic 2 responds with a ":" indicating it's ready to accept the next command
+  digitalWrite(ledPin, LOW);
+}
+
+void leftOfCane(){
+  // Object is on the left
+  emicSerial.print('S');
+  emicSerial.print("There is an object on the left.");  // Send the desired string to convert to speech
+  emicSerial.print('\n');
+  digitalWrite(ledPin, HIGH);         // Turn on LED while Emic is outputting audio
+  while (emicSerial.read() != ':');   // Wait here until the Emic 2 responds with a ":" indicating it's ready to accept the next command
+  digitalWrite(ledPin, LOW);
+}
+
+void rightOfCane(){
+  // Object is on the right
+  emicSerial.print('S');
+  emicSerial.print("There is an object on the right");  // Send the desired string to convert to speech
+  emicSerial.print('\n');
+  digitalWrite(ledPin, HIGH);         // Turn on LED while Emic is outputting audio
+  while (emicSerial.read() != ':');   // Wait here until the Emic 2 responds with a ":" indicating it's ready to accept the next command
+  digitalWrite(ledPin, LOW);
+}
+
+void distanceOfObj(){
+  // Object is 2 feet away
+  emicSerial.print('S');
+  emicSerial.print("There is an object that is 2 feet away");  // Send the desired string to convert to speech
+  emicSerial.print('\n');
+  digitalWrite(ledPin, HIGH);         // Turn on LED while Emic is outputting audio
+  while (emicSerial.read() != ':');   // Wait here until the Emic 2 responds with a ":" indicating it's ready to accept the next command
+  digitalWrite(ledPin, LOW);
+}
