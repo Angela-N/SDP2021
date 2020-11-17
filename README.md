@@ -3,7 +3,7 @@
 # Members
 Linda Tran - Current Repository                                                              
 Angela Nayiga - https://github.com/Angela-N/Smart-Stick                                             
-Marly Dure -                                                                 
+Marly Dure - https://github.com/mdure/SDP_marly                                                                                
 Max Matias -                                        
 
 # Resources for Emic 2 Text to Speech Module 
